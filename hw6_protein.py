@@ -37,7 +37,25 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    rna = ""
+    for i in dna:
+        if i =="T":
+            rna += "U"
+        else:
+            rna += i
+
+    reminder = (len(dna)-startIndex)%3
+    endIndex = len(dna)-reminder
+    stop_codons = ["UAA", "UAG", "UGA"]
+    rna_lst = []
+
+    for i in range(startIndex, endIndex, 3):
+        codon = rna[i]+rna[i+1]+rna[i+2]
+        rna_lst.append(codon)
+        if codon in stop_codons:
+            break
+
+    return rna_lst
 
 
 '''

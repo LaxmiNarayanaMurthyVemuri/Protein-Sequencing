@@ -1,7 +1,7 @@
 """
 Protein Sequencing Project
-Name:
-Roll Number:
+Name: Vedavyas Vundyala
+Roll Number: 2021-IIITH-C1-039
 """
 
 import hw6_protein_tests as test
@@ -17,7 +17,17 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+    f = open(filename, "r")
+    text = f.read()
+    f.close()
+
+    text = text.splitlines()
+
+    cleaned_text = ""
+    for i in text:
+        cleaned_text += i
+
+    return cleaned_text
 
 
 '''

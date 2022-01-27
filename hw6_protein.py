@@ -4,6 +4,9 @@ Name:
 Roll Number:
 """
 
+import string
+
+from numpy import char
 import hw6_protein_tests as test
 
 project = "Protein" # don't edit this
@@ -17,7 +20,9 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+    f = open(filename, "r") 
+    lines = f.read().replace("\n","")
+    return lines
 
 
 '''
@@ -27,7 +32,15 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    list1=[]
+    dna=dna[startIndex:].replace("T", "U")
+    for i in range(0,len(dna),3):
+        list1.append(dna[i:i+3])
+    for i in list1:
+        if i=="UAA"or i=="UGA" or i=="UAG":
+          new=list1.index(i)
+          return list1[:new+1]   
+    return list1
 
 
 '''
@@ -38,7 +51,14 @@ Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
     import json
-    return
+    dict1={}
+    f = open(filename, "r")
+    j = json.load(f)
+    for k,v in j.items():
+        for r in v:
+            new=r.replace("T","U")
+            dict1[new]=k
+    return dict1
 
 
 '''
@@ -48,7 +68,14 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
+    list1=[]
+    for k in codons:
+        for v in codonD:
+            if k==v:
+                list1.append(codonD[v])
+                if list1[0]=="Met":
+                 list1[0]="Start"
+    return list1
 
 
 '''
@@ -58,7 +85,23 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    new=readFile(dnaFilename)
+    new1=makeCodonDictionary(codonFilename)
+    list1=[]
+    i=0
+    unused_bias=0
+    while i<len(new):
+        list2=new[i:i+3]
+        if list2=="ATG":
+            r=dnaToRna(new,i)
+            s=generateProtein(r,new1)
+            list1.append(s)
+            i+=3*len(s)
+        else:
+            i+=1
+            unused_bias+=1
+    print("total number of bases",len(new),"unused-base count",unused_bias,"total number of proteins synthesized",len(list1))
+    return list1
 
 
 def runWeek1():
@@ -186,10 +229,15 @@ def runFullProgram():
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    runWeek1()
+    #print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    #test.week1Tests()
+    #print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    #runWeek1()
+    #test.testReadFile()
+    #test.testDnaToRna()
+    #test.testMakeCodonDictionary()
+    #test.testGenerateProtein()
+    test.testSynthesizeProteins()
 
     ## Uncomment these for Week 2 ##
     """

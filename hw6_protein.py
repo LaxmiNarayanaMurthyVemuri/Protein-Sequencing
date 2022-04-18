@@ -17,8 +17,17 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
-
+    file=open(filename,"r")
+    content=file.read()
+    #print(type(content))
+    string_without_line_breaks = ""
+    for line in content:
+        stripped_line = line.rstrip()
+        string_without_line_breaks+= stripped_line
+    file.close()
+    #print(string_without_line_breaks)
+    return string_without_line_breaks
+    # #splitlines() will reaturn a list. 
 
 '''
 dnaToRna(dna, startIndex)

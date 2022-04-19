@@ -4,6 +4,7 @@ Name:
 Roll Number:
 """
 
+from tkinter.ttk import LabeledScale
 import hw6_protein_tests as test
 
 project = "Protein" # don't edit this
@@ -254,8 +255,19 @@ createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None)
 Parameters: list of strs ; list of floats ; str ; list of floats ; str ; [optional] list of strs
 Returns: None
 '''
-def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
+def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList):
     import matplotlib.pyplot as plt
+    #xLabels=makeAminoAcidLabels(label1,label2)
+    w = 0.35  # the width of the bars
+
+    plt.bar(xLabels, freqList1, width=-w, align='edge', label=label1, edgecolor=edgeList)
+    plt.bar(xLabels, freqList2, width= w, align='edge', label=label2, edgecolor=edgeList)
+
+    plt.xticks(rotation="vertical")
+    plt.legend()
+    plt.title("Graph")
+
+    plt.show()
     return
 
 
@@ -266,7 +278,17 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-    return
+    #print(biggestDiffs)
+    list = []
+    edge = []
+    for i in biggestDiffs:
+        list.append(i[0])
+    for j in labels:
+        if j in list:
+            edge.append("black")
+        else:
+            edge.append("white")
+    return edge
 
 
 '''

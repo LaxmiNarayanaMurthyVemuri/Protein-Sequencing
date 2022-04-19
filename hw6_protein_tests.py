@@ -269,7 +269,7 @@ def testCreateChart():
     labels = makeAminoAcidLabels(plist1, plist2)
     freqList1 = setupChartData(labels, plist1)
     freqList2 = setupChartData(labels, plist2)
-    createChart(labels, freqList1, "Ex1", freqList2, "Ex2")
+    createChart(labels, freqList1, "Ex1", freqList2, "Ex2",edgeList=None)
     print("... check your chart!")
 
 def testMakeEdgeList():

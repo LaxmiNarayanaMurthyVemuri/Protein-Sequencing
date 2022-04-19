@@ -121,8 +121,9 @@ Returns: 2D list of strs
 def commonProteins(proteinList1, proteinList2):
     common=[]
     for i in range(len(proteinList1)):
-        if proteinList1[i] in proteinList2:
-            common.append(proteinList1[i])
+        if proteinList1[i] in proteinList2:  
+            if proteinList1[i] not in common:
+                common.append(proteinList1[i])
     return common 
 
 
@@ -154,7 +155,6 @@ def aminoAcidDictionary(aaList):
             dict[aaList[i]]+=1
     return dict
 
-
 '''
 findAminoAcidDifferences(proteinList1, proteinList2, cutoff)
 #4 [Check6-2]
@@ -162,8 +162,23 @@ Parameters: 2D list of strs ; 2D list of strs ; float
 Returns: 2D list of values
 '''
 def findAminoAcidDifferences(proteinList1, proteinList2, cutoff):
-    return
-
+    list=[]
+    x=aminoAcidDictionary(combineProteins(proteinList1))
+    y=aminoAcidDictionary(combineProteins(proteinList2))
+    for key,value in x.items():
+        x[key]=value/len(combineProteins(proteinList1))
+        if key not in y:
+            y[key]=0 
+    for key,value in y.items():
+        y[key]=value/len(combineProteins(proteinList2)) 
+        if key not in x:
+            x[key]=0    
+        if abs(x[key]-y[key])>cutoff:
+            #ignore=["Start","Stop"]
+            if key!= "Start" and key!= "Stop" :
+                list.append([key, x[key], y[key]])
+    return list
+                
 
 '''
 displayTextResults(commonalities, differences)

@@ -214,8 +214,16 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: list of strs
 '''
 def makeAminoAcidLabels(proteinList1, proteinList2):
-    
-    return
+    common=[]
+    x=combineProteins(proteinList1)
+    y=combineProteins(proteinList2)
+    x.extend(y)
+    #print(x)
+    for i in range(len(x)):
+        if x[i] not in common:
+            common.append(x[i])
+    #print(sorted(common))
+    return sorted(common) 
 
 
 '''

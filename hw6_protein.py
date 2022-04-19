@@ -72,9 +72,11 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
-
-
+    list=["Start"]
+    for i in range(1,len(codons)):
+        list.append(codonD[codons[i]])
+    #print(list)
+    return list
 '''
 synthesizeProteins(dnaFilename, codonFilename)
 #5 [Check6-1]

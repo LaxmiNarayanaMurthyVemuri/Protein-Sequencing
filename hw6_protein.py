@@ -54,9 +54,16 @@ Parameters: str
 Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
+    dict={}
     import json
-    return
-
+    f=open(filename)
+    data=json.load(f)
+    for key,value in data.items():
+        for j in range(len(value)):
+            x=value[j].replace("T","U")
+            dict[x]=key
+    #print(dict)
+    return dict
 
 '''
 generateProtein(codons, codonD)

@@ -84,7 +84,23 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    proteins_list=[]
+    Data=readFile(dnaFilename)
+    count=0
+    i=0
+    while(i<len(Data)):
+        if(Data[i:i+3]=="ATG"):
+            RNA=dnaToRna(Data,i)
+            #print(RNA)
+            Dict=makeCodonDictionary(codonFilename)
+            #print(Dict)
+            proteins=generateProtein(RNA,Dict)
+            proteins_list.append(proteins)
+            i=i+3*len(RNA)
+        else:
+            i=i+1
+            count+=1
+    return proteins_list
 
 
 def runWeek1():

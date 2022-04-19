@@ -28,7 +28,6 @@ def readFile(filename):
     #print(string_without_line_breaks)
     return string_without_line_breaks
     # #splitlines() will reaturn a list. 
-
 '''
 dnaToRna(dna, startIndex)
 #2 [Check6-1]
@@ -64,7 +63,6 @@ def makeCodonDictionary(filename):
             dict[x]=key
     #print(dict)
     return dict
-
 '''
 generateProtein(codons, codonD)
 #4 [Check6-1]
@@ -102,7 +100,6 @@ def synthesizeProteins(dnaFilename, codonFilename):
             count+=1
     return proteins_list
 
-
 def runWeek1():
     print("Human DNA")
     humanProteins = synthesizeProteins("data/human_p53.txt", "data/codon_table.json")
@@ -111,7 +108,6 @@ def runWeek1():
 
 
 ### WEEK 2 ###
-
 '''
 commonProteins(proteinList1, proteinList2)
 #1 [Check6-2]
@@ -125,8 +121,6 @@ def commonProteins(proteinList1, proteinList2):
             if proteinList1[i] not in common:
                 common.append(proteinList1[i])
     return common 
-
-
 '''
 combineProteins(proteinList)
 #2 [Check6-2]
@@ -154,7 +148,6 @@ def aminoAcidDictionary(aaList):
         else:
             dict[aaList[i]]+=1
     return dict
-
 '''
 findAminoAcidDifferences(proteinList1, proteinList2, cutoff)
 #4 [Check6-2]
@@ -178,8 +171,6 @@ def findAminoAcidDifferences(proteinList1, proteinList2, cutoff):
             if key!= "Start" and key!= "Stop" :
                 list.append([key, x[key], y[key]])
     return list
-                
-
 '''
 displayTextResults(commonalities, differences)
 #5 [Check6-2]
@@ -187,6 +178,21 @@ Parameters: 2D list of strs ; 2D list of values
 Returns: None
 '''
 def displayTextResults(commonalities, differences):
+    #print(commonalities)
+    lst = sorted(commonalities)
+    print("common proteins are:")
+    for i in range(len(lst)):
+        for j in range(len(lst[i])):
+            if lst[i][j] == "Start" or lst[i][j] == "Stop":
+                continue
+            else:
+                print(lst[i][j], end=' ')
+        print( )       
+    #print(differences)        
+    print("amino acid occured at modt differences are:")
+    for i in range(len(differences)):
+        print(differences[i][0],":",round(differences[i][1]*100,2),"% in seq1,",round(differences[i][2]*100,2),"% in seq2")
+        print( )
     return
 
 
@@ -271,6 +277,7 @@ if __name__ == "__main__":
     ## Uncomment these for Week 3 ##
     """
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
+    
     test.week3Tests()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     runFullProgram()

@@ -139,8 +139,6 @@ def combineProteins(proteinList):
             list.append(proteinList[i][j])
     #print(list)
     return list
-
-
 '''
 aminoAcidDictionary(aaList)
 #3 [Check6-2]
@@ -148,7 +146,13 @@ Parameters: list of strs
 Returns: dict mapping strs to ints
 '''
 def aminoAcidDictionary(aaList):
-    return
+    dict={}
+    for i in range(len(aaList)):
+        if aaList[i] not in dict:
+            dict[aaList[i]]=1
+        else:
+            dict[aaList[i]]+=1
+    return dict
 
 
 '''

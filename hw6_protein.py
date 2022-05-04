@@ -17,8 +17,17 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
-
+    file=open(filename,"r")
+    content=file.read()
+    #print(type(content))
+    string_without_line_breaks = ""
+    for line in content:
+        stripped_line = line.rstrip()
+        string_without_line_breaks+= stripped_line
+    file.close()
+    #print(string_without_line_breaks)
+    return string_without_line_breaks
+    # #splitlines() will reaturn a list. 
 
 '''
 dnaToRna(dna, startIndex)
@@ -27,9 +36,17 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
-
-
+    list=[]
+    n=3
+    Dna=dna.replace("T","U")
+    split_Dna=[Dna[i:i+n] for i in range(startIndex,len(Dna),n)]
+    for i in range(len(split_Dna)):
+        #print(split_Dna[i])
+        list.append(split_Dna[i])
+        if (split_Dna[i]=="UAA" or split_Dna[i]=="UAG" or split_Dna[i]=="UGA"):
+            break
+    #print(list)
+    return list
 '''
 makeCodonDictionary(filename)
 #3 [Check6-1]
@@ -37,9 +54,16 @@ Parameters: str
 Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
+    dict={}
     import json
-    return
-
+    f=open(filename)
+    data=json.load(f)
+    for key,value in data.items():
+        for j in range(len(value)):
+            x=value[j].replace("T","U")
+            dict[x]=key
+    #print(dict)
+    return dict
 
 '''
 generateProtein(codons, codonD)
@@ -48,9 +72,11 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
-
-
+    list=["Start"]
+    for i in range(1,len(codons)):
+        list.append(codonD[codons[i]])
+    #print(list)
+    return list
 '''
 synthesizeProteins(dnaFilename, codonFilename)
 #5 [Check6-1]
@@ -58,7 +84,23 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    proteins_list=[]
+    Data=readFile(dnaFilename)
+    count=0
+    i=0
+    while(i<len(Data)):
+        if(Data[i:i+3]=="ATG"):
+            RNA=dnaToRna(Data,i)
+            #print(RNA)
+            Dict=makeCodonDictionary(codonFilename)
+            #print(Dict)
+            proteins=generateProtein(RNA,Dict)
+            proteins_list.append(proteins)
+            i=i+3*len(RNA)
+        else:
+            i=i+1
+            count+=1
+    return proteins_list
 
 
 def runWeek1():
@@ -77,7 +119,11 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: 2D list of strs
 '''
 def commonProteins(proteinList1, proteinList2):
-    return
+    common=[]
+    for i in range(len(proteinList1)):
+        if proteinList1[i] in proteinList2:
+            common.append(proteinList1[i])
+    return common 
 
 
 '''
@@ -87,6 +133,7 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def combineProteins(proteinList):
+    
     return
 
 
@@ -192,12 +239,11 @@ if __name__ == "__main__":
     runWeek1()
 
     ## Uncomment these for Week 2 ##
-    """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     runWeek2()
-    """
+    
 
     ## Uncomment these for Week 3 ##
     """
